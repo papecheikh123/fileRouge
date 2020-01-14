@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setPassword($this->encoder->encodePassword($user, "admin"));
+        $user->setPassword($this->encoder->encodePassword($user, 'papis'));
         $user->setUsername('papishek');
         //$user->setIsActif(true);
 

@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -37,6 +39,13 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      */
     private $role;
+
+    
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
 
     public function getId(): ?int
     {
@@ -122,4 +131,18 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+   
 }
