@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -22,6 +23,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $username;
@@ -29,48 +31,57 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     *  @Groups({"read", "write"})
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
+     *  @Groups({"read", "write"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users",cascade={"persist"})
      */
     private $role;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="boolean")
      */
     private $isActive;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $prenom;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="user")
+  
+     * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="user",cascade={"persist"})
      */
     private $compte;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Depot", mappedBy="user")
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Depot", mappedBy="user",cascade={"persist"})
      */
     private $depot;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="users")
+     *  @Groups({"read", "write"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="users",cascade={"persist"})
      */
     private $partenaire;
     

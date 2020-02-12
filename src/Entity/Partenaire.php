@@ -6,14 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *    normalizationContext={"groups"={"read"}},
+ *       denormalizationContext={"groups"={"write"}})
  * @ORM\Entity(repositoryClass="App\Repository\PartenaireRepository")
  */
 class Partenaire
 {
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -21,22 +25,24 @@ class Partenaire
     private $id;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $ninea;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $rmc;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="partenaire")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="partenaire",cascade={"persist"})
      */
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="partenaire")
+     * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="partenaire",cascade={"persist"})
      */
     private $comptes;
 

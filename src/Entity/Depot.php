@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -19,17 +20,19 @@ class Depot
     private $id;
 
     /**
+     *  @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $montant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="depot")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="depot",cascade={"persist"})
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Compte", inversedBy="depot")
+     *  
+     * @ORM\ManyToOne(targetEntity="App\Entity\Compte", inversedBy="depot",cascade={"persist"})
      */
     private $compte;
 
